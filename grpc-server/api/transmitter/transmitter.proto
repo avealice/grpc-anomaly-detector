@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package transmitter;
+
+import "google/protobuf/empty.proto";
+option go_package = ".";
+
+message Message {
+  string session_id = 1;
+  double frequency = 2;
+  int64 timestamp_utc = 3;
+}
+
+message NewConnection {
+  string session_id = 1;
+  double mean = 2;
+  double std = 3;
+}
+
+service TransmitterService {
+  rpc Connect (google.protobuf.Empty) returns (NewConnection);
+  rpc StreamData (google.protobuf.Empty) returns (stream Message);
+}
